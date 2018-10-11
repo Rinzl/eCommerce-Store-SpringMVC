@@ -1,8 +1,14 @@
 package com.thd.ecommercespringmvc.model;
 
+import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
-public class Product {
+public class Product implements Serializable {
+
+    private static NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("vi","VN"));
+
     private int id;
     private String name;
     private int idCategory;
@@ -13,6 +19,7 @@ public class Product {
     private double price;
     private Date createDate;
     private boolean activeStatus;
+    private int quantityInCart;
 
     public Product() {
     }
@@ -97,6 +104,22 @@ public class Product {
         this.activeStatus = activeStatus;
     }
 
+    public String getFormattedPrice() {
+        return nf.format(price).replace(" ","");
+    }
+
+    public String getFormattedTotalPrice() {
+        return nf.format(price * quantityInCart).replace(" ","");
+    }
+
+    public void setQuantityInCart(int quantityInCart) {
+        this.quantityInCart = quantityInCart;
+    }
+
+    public int getQuantityInCart() {
+        return quantityInCart;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -110,6 +133,7 @@ public class Product {
                 ", price=" + price +
                 ", createDate=" + createDate +
                 ", activeStatus=" + activeStatus +
+                ", quantityInCart=" + quantityInCart +
                 '}';
     }
 }

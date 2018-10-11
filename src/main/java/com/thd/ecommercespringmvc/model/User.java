@@ -43,10 +43,9 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean checkValidUser() {
-        return userName != null && password != null;
+    public boolean isValidUser() {
+        return !userName.isEmpty() && !password.isEmpty();
     }
-
     @Override
     public String toString() {
         return "User{" +

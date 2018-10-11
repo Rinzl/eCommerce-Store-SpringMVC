@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Đăng nhập</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" th:href="@{/images/icons/favicon.png}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/themify/themify-icons.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/elegant-font/html-css/style.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animsition/css/animsition.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}">
+<!--===============================================================================================-->
+</head>
+<body class="animsition">
+
+	<!-- Header -->
+	<header th:replace="fragments/header :: header (cartSize=${cartSize})"></header>
+
+	<!-- content page -->
+	<div class="contentforlayout">
+		<!--My Account Content Area Start-->
+
+
+
+
+
+		<!-- breadcrumb -->
+		<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+			<a class="s-text16" th:href="@{/index}" title="Back to the frontpage">
+				Trang chủ<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			</a>
+
+
+			<a class="s-text16" href=""><span>Account</span></a>
+
+		</div>
+		<!--End Breadcumb area -->
+
+
+		<div class="container">
+			<div class="row">
+				<div id="content" class="col-sm-12">
+					<div th:if="${loginFailed == true}" class="row">
+						<div class="alert alert-danger">
+							<i class="fa fa-exclamation-circle"></i>
+							Email hoặc mật khẩu không chính xác !
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="well">
+								<h2>Khách hàng mới</h2>
+								<p><strong>Đăng kí tài khoản</strong></p>
+								<p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+								<br>
+								<a th:href="@{/account/register}" id="button-account-register" class="btn btn-primary">Tiếp tục</a>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="well">
+								<h2>Bạn đã có tài khoản </h2>
+								<!--<p><strong>I am a returning customer</strong></p>-->
+								<form method="post" action="/account/login" id="customer_login" accept-charset="UTF-8">
+									<input type="hidden" name="form_type" value="customer_login">
+									<input type="hidden" name="utf8" value="✓">
+									<div class="note form-success" id="resetSuccess" style="display:none;">
+										We've sent you an email with a link to update your password.
+									</div>
+									<div class="form-group">
+										<label class="control-label" for="customer_email">Email</label>
+										<input type="email" value="" name="customer[email]" id="customer_email" placeholder="Email" class="form-control" autocorrect="off" autocapitalize="off" autofocus="">
+									</div>
+
+									<div class="form-group">
+										<label class="control-label" for="customer_password">Password</label>
+										<input class="form-control" type="password" value="" name="customer[password]" id="customer_password" placeholder="Password">
+										<a rel="nofollow" href="#" onclick="showRecoverPasswordForm();return false;">Quên mật khẩu?</a>
+									</div>
+
+									<p class="submit">
+										<input type="submit" value="Sign In" class="btn btn-primary">
+										or <a class="btn-acct" th:href="@{/index}">Trở về trang chủ</a>
+									</p>
+								</form>
+
+								<div id="recover_password" style="display: none;">
+
+									<h3>Đặt lại mật khẩu</h3>
+									<p>Email sẽ được gửi đến cho bạn để đặt lại mật khẩu</p>
+
+									<form method="post" action="/account/recover" accept-charset="UTF-8"><input type="hidden" name="form_type" value="recover_customer_password"><input type="hidden" name="utf8" value="✓">
+										<div class="form-group">
+											<label for="recover-email">Email</label>
+											<input type="text" value="" name="email" class="form-control" id="recover-email" placeholder="Email" autocorrect="off" autocapitalize="off">
+
+											<p class="submit lost-password form-group">
+												<button class="btn btn-primary" name="SubmitLogin" id="button-account" type="submit">
+													<span>Submit</span>
+												</button>
+												or <a class="btn-acct" href="#" onclick="hideRecoverPasswordForm();return false;">Cancel</a>
+											</p>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End of My Account Content Area-->
+
+		<!-- End Content -->
+
+	</div>
+
+
+	<!-- Footer -->
+	<footer th:replace="fragments/footer :: footer"></footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<!-- Container Selection -->
+	<div id="dropDownSelect1"></div>
+	<div id="dropDownSelect2"></div>
+
+
+
+<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/select2/select2.min.js}"></script>
+	<script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+	</script>
+
+	<script>
+        /*
+          Show/hide the recover password form when requested.
+        */
+        function showRecoverPasswordForm() {
+            document.getElementById('recover_password').style.display = 'block';
+            document.getElementById('customer_login').style.display='none';
+        }
+
+        function hideRecoverPasswordForm() {
+            document.getElementById('recover_password').style.display = 'none';
+            document.getElementById('customer_login').style.display = 'block';
+        }
+
+        // Allow deep linking to the recover password form
+        if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+        // reset_success is only true when the reset form is
+
+	</script>
+
+
+	<!--===============================================================================================-->
+	<script th:src="@{/js/map-custom.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>
