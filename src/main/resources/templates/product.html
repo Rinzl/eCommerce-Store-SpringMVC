@@ -36,7 +36,7 @@
 <body class="animsition">
 
 	<!-- Header -->
-	<header th:replace="fragments/header :: header (cartSize=${cartSize})"></header>
+	<header th:replace="fragments/header :: header (cartSize=${cartSize}, loggedInUser=${loggedInUser})"></header>
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg);">
 		<h2 class="l-text2 t-center">
@@ -72,34 +72,15 @@
 
 						<ul class="p-b-7">
 							<li class="p-t-4">
-								<a href="#" class="s-text13 active1">
-									All
+								<a th:href="@{/products}" class="s-text13 active1">
+									Tất cả
 								</a>
 							</li>
 
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Women
-								</a>
+							<li th:each="cate : ${categoryList}" class="p-t-4">
+								<a th:href="@{/products(category=${cate.id})}" class="s-text13" th:utext="${cate.getName()}"></a>
 							</li>
 
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Men
-								</a>
-							</li>
-
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Kids
-								</a>
-							</li>
-
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Accesories
-								</a>
-							</li>
 						</ul>
 
 						<!--  -->
@@ -170,7 +151,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img th:src="@{images/iphone/iphonexs/iphonexs1.jpg}" alt="IMG-PRODUCT">
+									<img th:src="${product.image}" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -198,10 +179,10 @@
 
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">
-						<a class="item-pagination flex-c-m trans-0-4" th:href="@{/product(page=1)}" title="« Previous">&lt;</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-						<a class="item-pagination flex-c-m trans-0-4" href="/collections/all?page=2" title="Next »">&gt;</a>
+						<a th:if="${page != 1}" class="item-pagination flex-c-m trans-0-4" th:href="@{/products(page=${page} -1)}" title="« Previous">&lt;</a>
+						<a th:utext="${page}" href="#" class="item-pagination flex-c-m trans-0-4 active-pagination"></a>
+						<a th:if="${page} < ${maxList}" th:utext="${page + 1}" th:href="@{/products(page=${page} +1)}" class="item-pagination flex-c-m trans-0-4"></a>
+						<a th:if="${page+1} < ${maxList}" class="item-pagination flex-c-m trans-0-4" th:href="@{/products(page=${page} +2)}" title="Next »">&gt;</a>
 					</div>
 				</div>
 			</div>

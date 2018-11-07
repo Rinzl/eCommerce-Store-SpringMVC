@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <aside class="left-sidebar" th:fragment="sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" th:href="@{/admin}" aria-expanded="false"><i class="ti-loop"></i><span class="hide-menu">Trang chủ</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-notification-clear-all"></i><span class="hide-menu">Quản lí sản phẩm</span></a>
+                        <ul aria-expanded="false" class="collapse first-level">
+                            <li class="sidebar-item"><a th:href="@{/admin/products/add}" class="sidebar-link"><i class="mdi mdi-octagram"></i><span class="hide-menu"> Thêm sản phẩm</span></a></li>
+                            <li class="sidebar-item"><a th:href="@{/admin/products/overview}" class="sidebar-link"><i class="mdi mdi-octagram"></i><span class="hide-menu"> Sửa/Xóa sản phẩm</span></a></li>
+                            <li class="sidebar-item"><a th:href="@{/admin/products/category}" class="sidebar-link"><i class="mdi mdi-octagram"></i><span class="hide-menu"> Chỉnh sửa nhóm hàng</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="/admin/bills/overview" aria-expanded="false"><i class="mdi mdi-notification-clear-all"></i><span class="hide-menu">Quản lí đơn hàng</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" href="/admin/employee/overview" aria-expanded="false"><i class="mdi mdi-notification-clear-all"></i><span class="hide-menu">Quản lí nhân viên</span></a></li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <title>Thêm sản phẩm</title>
+    <!-- Custom CSS -->
+    <link th:href="@{/dist/css/style.css}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header th:replace="admin/fragments/header :: header(admin = ${admin})"></header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-5 align-self-center">
+                    <h4 class="page-title">Thêm sản phẩm</h4>
+                </div>
+                <div class="col-7 align-self-center">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div th:if="${notif != null && notif == true}" class="alert alert-success" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                Thêm sản phẩm thành công
+            </div>
+            <div th:if="${notif != null && notif == false}" class="alert alert-danger" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                Thêm sản phẩm thất bại
+            </div>
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/products/add}" method="post" th:object="${product}" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h5 class="card-title">Thông tin sản phẩm</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Tên sản phẩm</label>
+                                                <input th:field="*{name}" type="text" id="firstName" class="form-control"> </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Miêu tả</label>
+                                                <input th:field="*{description}" type="text" id="lastName" class="form-control"> </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Category</label>
+                                                <select th:field="*{category}" class="form-control" data-placeholder="Choose a Category" tabindex="1">
+                                                    <option th:each="cate : ${categories}" th:value="${cate.id}" th:utext="${cate.name}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Số lượng</label>
+                                                <input th:field="*{quantity}" type="number" id="quantity" class="form-control"> </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Giá</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1"><i class="ti-money"></i></span>
+                                                    </div>
+                                                    <input th:field="*{price}" type="text" class="form-control" aria-label="price" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Giảm giá</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon2"><i class="ti-cut"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-label="Discount" aria-describedby="basic-addon2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <h5 class="card-title m-t-40">Thông tin chi tiết</h5>
+                                    <div class="row">
+                                        <div class="col-md-12 ">
+                                            <div class="form-group">
+                                                <textarea th:field="*{descriptionDetail}" class="form-control" rows="4">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Meta Title</label>
+                                                <input type="text" class="form-control"> </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Meta Keyword</label>
+                                                <input type="text" class="form-control"> </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-3">
+                                            <h5 class="card-title m-t-20">Tải ảnh</h5>
+                                            <div class="el-element-overlay">
+                                                <div class="el-card-item">
+                                                    <div class="el-card-avatar el-overlay-1">
+                                                        <img id="previewImg" src="https://via.placeholder.com/350x450" alt="user" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn btn-info waves-effect waves-light">
+                                                <input th:field="*{multipartFile}" id="imgInp" type="file" name="file" class="upload">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="form-actions m-t-40">
+                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Lưu</button>
+                                    <button type="button" class="btn btn-dark">Hủy</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- customizer Panel -->
+<!-- ============================================================== -->
+<div class="chat-windows"></div>
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="../../assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- apps -->
+<script src="../../dist/js/app.min.js"></script>
+<script src="../../dist/js/app.init.js"></script>
+<script src="../../dist/js/app-style-switcher.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="../../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
+<!--Wave Effects -->
+<script src="../../dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="../../dist/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="../../dist/js/custom.min.js"></script>
+<script type="text/javascript">
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#previewImg').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function() {
+        readURL(this);
+    });
+</script>
+</body>
+
+</html>

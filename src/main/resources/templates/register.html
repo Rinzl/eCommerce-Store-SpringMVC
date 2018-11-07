@@ -35,7 +35,7 @@
 <body class="animsition">
 
 	<!-- Header -->
-	<header th:replace="fragments/header :: header (cartSize=${cartSize})"></header>
+	<header th:replace="fragments/header :: header (cartSize=${cartSize}, loggedInUser=${loggedInUser})"></header>
 
 	<!-- content page -->
 	<div class="contentforlayout">

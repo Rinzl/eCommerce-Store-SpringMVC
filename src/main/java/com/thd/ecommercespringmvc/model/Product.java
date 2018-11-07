@@ -1,5 +1,7 @@
 package com.thd.ecommercespringmvc.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Date;
@@ -7,12 +9,15 @@ import java.util.Locale;
 
 public class Product implements Serializable {
 
-    private static NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("vi","VN"));
+    public static final String PRODUCT_ROOT_IMAGE = "C:\\Users\\tranh\\IdeaProjects\\ecommerce-spring-mvc\\public\\images\\";
+    public static final String PRODUCT_RELATIVE_IMG_PATH = "/public_img/images/";
+    public static NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("vi","VN"));
 
     private int id;
     private String name;
     private int idCategory;
     private int quantity;
+    private String category;
     private String description;
     private String descriptionDetail;
     private String image;
@@ -22,6 +27,18 @@ public class Product implements Serializable {
     private int quantityInCart;
 
     public Product() {
+    }
+
+    public static String formatPrice(double price) {
+        return nf.format(price).replace(" ","");
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -112,12 +129,19 @@ public class Product implements Serializable {
         return nf.format(price * quantityInCart).replace(" ","");
     }
 
+    public double getTotalPrice() {
+        return price * quantityInCart;
+    }
+
     public void setQuantityInCart(int quantityInCart) {
         this.quantityInCart = quantityInCart;
     }
 
     public int getQuantityInCart() {
         return quantityInCart;
+    }
+    public int productPriceToString() {
+        return (int) price;
     }
 
     @Override

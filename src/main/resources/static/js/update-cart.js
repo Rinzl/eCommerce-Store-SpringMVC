@@ -25,7 +25,13 @@ function updateCart() {
         success : function (data) {
             var code = data.status;
             if (code === 1) {
-                swal("Giỏ hàng", "Cập nhật thành công!", "success");
+                swal({
+                    title: "Cập nhật giỏ hàng thành công",
+                    icon: "success",
+                    buttons: "OK",
+                }).then(() => {
+                    window.location.reload(true);
+                });
             } else {
                 swal("Giỏ hàng", "Cập nhật không thành công, vui lòng tải lại trang web!", "error");
             }
