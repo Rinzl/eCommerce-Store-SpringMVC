@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Thông tin cá nhân</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" th:href="@{/images/icons/favicon.png}"/>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/themify/themify-icons.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/elegant-font/html-css/style.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animsition/css/animsition.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}">
+	<!--===============================================================================================-->
+</head>
+<body class="animsition">
+
+	<!-- Header -->
+	<header th:replace="fragments/header :: header (cartSize=${cartSize}, loggedInUser=${loggedInUser})"></header>
+
+	<!-- content page -->
+	<div class="contentforlayout">
+
+
+
+
+
+		<!-- breadcrumb -->
+		<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+			<a class="s-text16" th:href="@{/index}" title="Back to the frontpage">
+				Home<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			</a>
+
+
+			<a class="s-text16" href=""><span>Tài khoản</span></a>
+
+		</div>
+		<!--End Breadcumb area -->
+
+
+		<div class="container">
+			<div class="row">
+				<div id="content" class="col-sm-12 contact-form">
+					<h3>My Account</h3>
+
+					<div class="grid">
+
+						<div class="grid-item two-thirds medium-down--one-whole">
+							<h3>Order History</h3>
+
+							<p>You haven't placed any orders yet.</p>
+
+						</div>
+
+						<div class="grid-item one-third medium-down--one-whole">
+							<h3>Thông tin tài khoản</h3>
+
+							<table class="table table-bordered table-hover">
+								<tbody>
+								<tr>
+									<td class="text-left">
+										<h5 th:utext="${address.name}"></h5>
+
+										<p th:utext="${address.getContent()}"></p>
+
+									</td>
+									<td class="text-right">
+										<p>
+											<a th:href="@{/account/addresses}" th:utext="'View Addresses (' + ${addressSize} +')'"></a>
+										</p>
+
+									</td></tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Content -->
+	</div>
+
+	<!-- Footer -->
+	<footer th:replace="fragments/footer :: footer"></footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<!-- Container Selection -->
+	<div id="dropDownSelect1"></div>
+	<div id="dropDownSelect2"></div>
+
+
+
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/select2/select2.min.js}"></script>
+	<script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+	</script>
+
+<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Địa chỉ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" th:href="@{/images/icons/favicon.png}"/>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/themify/themify-icons.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/elegant-font/html-css/style.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animsition/css/animsition.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}">
+	<!--===============================================================================================-->
+</head>
+<body class="animsition">
+
+	<!-- Header -->
+	<header th:replace="fragments/header :: header (cartSize=${cartSize}, loggedInUser=${loggedInUser})"></header>
+	<!-- content page -->
+	<div class="contentforlayout">
+		<!-- breadcrumb -->
+		<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+			<a class="s-text16" href="/" title="Back to the frontpage">
+				Home<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			</a>
+
+
+			<a class="s-text16" href=""><span>Addresses</span></a>
+
+		</div>
+		<!--End Breadcumb area -->
+
+
+		<div class="container">
+			<div class="row">
+				<div id="content" class="col-sm-12 contact-form">
+					<header class="section-header" style="display:inline;background: none;">
+						<h3 class="section-header--left">My Account</h3>
+						<div class="pull-right">
+							<a href="#" class="btn btn-success" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">Thêm địa chỉ mới</a>
+						</div>
+					</header><div class="breadcrumbs"><div class="container"></div></div>
+
+					<div class="grid">
+
+						<div class="grid-item one-third medium-down--one-whole">
+							<p><a href="/account">Return to Account Details</a></p>
+						</div>
+						<div class="grid-item two-thirds medium-down--one-whole" id="create-account-form">
+							<form method="post" th:action="@{/account/add-address}" id="address_form_new" accept-charset="UTF-8" th:object="${customerCreater}">
+								<input type="hidden" name="form_type" value="customer_address">
+								<input type="hidden" name="utf8" value="✓">
+								<div class="form-content" id="add_address" style="display: none;">
+
+									<h3>Add a New Address</h3>
+
+
+									<div class="form-group">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label for="address_first_name_new">Họ và tên</label>
+											<input th:field="*{name}" type="text" id="address_first_name_new" class="form-control" name="address[first_name]" value="">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label for="address_address2_new">Địa chỉ</label>
+											<input th:field="*{address}" type="text" id="address_address2_new" class="form-control" name="address[address2]" value=" ">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label class="" for="address_phone_new">Số điện thoại</label>
+											<input th:field="*{phone}" type="tel" id="address_phone_new" class="form-control" name="address[phone]" value="" placeholder="555-555-1234">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<p>
+												<input th:field="*{defaultAddress}" type="checkbox" id="address_default_address_new" name="address[default]" value="1">
+												<label for="address_default_address_new" class="inline">Đặt làm địa chỉ mặc định?</label>
+											</p>
+										</div>
+										<div class="col-sm-4 col-sm-offset-2">
+											<div class="buttons clearfix">
+												<input type="submit" class="btn btn-primary" value="Thêm địa chỉ">
+												<span class="form-spacer">or</span>
+												<a href="#" class="btn btn-default" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">Cancel</a>
+											</div>
+										</div>
+									</div>
+
+									<hr>
+								</div>
+							</form>
+
+							<h2>Your Addresses</h2>
+
+
+							<div th:each="ctm : ${customers}" class="form-horizontal contact-form" th:id="${'edit_address_'+ctm.getId()}" style="display: none;">
+								<h3>Sửa địa chỉ</h3>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" th:for="${'address_first_name_'+ctm.id}">Họ và tên</label>
+									<div class="col-sm-4">
+										<input type="text" th:id="${'address_first_name_'+ctm.id}" class="form-control" name="address[first_name]" th:value="${ctm.name}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" th:for="${'address_address_' + ctm.id}">Địa chỉ</label>
+									<div class="col-sm-4">
+										<input type="text" th:id="${'address_address_' + ctm.id}" class="form-control" name="address[address]" th:value="${ctm.address}">
+									</div>
+								</div>
+
+								<div class="form-group">
+
+									<label class="col-sm-2 control-label" th:for="${'address_phone_'+ctm.id}">Số điện thoại</label>
+									<div class="col-sm-4">
+										<input type="tel" th:id="${'address_phone_'+ctm.id}" class="form-control" name="address[phone]" th:value="${ctm.phone}" placeholder="555-555-1234">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-6">
+										<p>
+											<input type="checkbox" th:id="${'address_default_address_'+ctm.id}" name="address[default]" value="0">
+											<label for="address_default_address_new" class="inline">Set as default address?</label>
+										</p>
+									</div>
+									<div class="col-sm-4 col-sm-offset-2">
+										<div class="buttons clearfix">
+											<input type="submit" class="btn btn-primary" value="Update Address">
+											or <a href="#" class="btn btn-default" th:onclick="'Shopify.CustomerAddress.toggleForm('+ ${ctm.id} +'); return false;'">Cancel</a>
+
+										</div>
+									</div>
+								</div>
+
+								<hr>
+							</div>
+							<table class="table table-bordered table-hover">
+								<tbody>
+									<tr th:each="customer : ${customers}">
+										<td class="text-left">
+											<h3 th:if="${customer.getDefaultAddress().intValue() == 1}" th:utext="${customer.name} + ' <em>(Mặc định)</em>'">
+											</h3>
+											<h3 th:if="${customer.getDefaultAddress().intValue()} != 1" th:utext="${customer.name}">
+											</h3>
+											<p th:utext="${customer.getContent()}"></p>
+										</td>
+										<td class="text-right">
+											<p>
+												<a href="#" th:onclick="'Shopify.CustomerAddress.toggleForm('+${customer.id}+'); return false'">Sửa</a> |
+												<a href="#" th:onclick="'Shopify.CustomerAddress.destroy('+${customer.id}+', \'123\'); return false'">Xóa</a>
+											</p>
+										</td>
+									</tr>
+									<form method="post" action="/account/addresses/1003721359402" id="address_form_1003721359402" accept-charset="UTF-8"></form>
+									<input type="hidden" name="form_type" value="customer_address">
+									<input type="hidden" name="utf8" value="✓">
+									<input type="hidden" name="_method" value="put">
+
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- End Content -->
+	</div>
+	<!-- Footer -->
+	<footer th:replace="fragments/footer :: footer"></footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<!-- Container Selection -->
+	<div id="dropDownSelect1"></div>
+	<div id="dropDownSelect2"></div>
+
+
+
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/sweetalert/sweetalert.min.js}"></script>
+	<!--===============================================================================================-->
+	<script type="text/javascript" th:src="@{/vendor/select2/select2.min.js}"></script>
+	<script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+	</script>
+
+<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/js/shopify.js}"></script>
+	<!--<script th:src="@{/js/address.js}"></script>-->
+	<script>
+
+        // Contents of customer_area.js (global asset)
+        Shopify.CustomerAddress = {
+            toggleForm: function(id) {
+                var editEl = document.getElementById('edit_address_'+id);
+                // var viewEl = document.getElementById('view_address_'+id);
+                editEl.style.display = editEl.style.display == 'none' ? '' : 'none';
+                // viewEl.style.display = viewEl.style.display == 'none' ? '' : 'none';
+                return false;
+            },
+
+            toggleNewForm: function() {
+                var el = document.getElementById('add_address');
+                el.style.display = el.style.display == 'none' ? '' : 'none';
+                return false;
+            },
+
+            destroy: function(id, confirm_msg) {
+                console.log("Delete Address id : " + id)
+				swal({
+                    title: "Bạn có muốn xóa địa chỉ này không?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+				}).then((willDelete) => {
+				    if (willDelete) {
+				        $.ajax({
+                            type : "POST",
+                            contentType : "application/json",
+                            url : "/account/delete-address",
+                            data : JSON.stringify({
+                                id : id.toString()
+                            }),
+                            dataType : "json",
+                            timeout : 1000,
+                            success : function (data) {
+                                if (data.status === 1) {
+                                    swal("Địa chỉ đã được xóa", {
+                                        icon: "success",
+                                    }).then(() => {
+                                        window.location.reload(true);
+                                    });
+                                } else {
+                                    swal("ERROR", "Lỗi không xác định, vui lòng tải lại trang web", "error");
+
+                                }
+                            },
+                            error : function (e) {
+                                swal("ERROR", "Có Lỗi không xác định, vui lòng tải lại trang web", "error");
+                                console.log("ERROR: ", e);
+                            }
+						})
+					}
+				})
+            }
+        }
+	</script>
+
+</body>
+</html>
